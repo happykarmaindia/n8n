@@ -1,7 +1,7 @@
 ARG NODE_VERSION=20.19.0
 
 # 1. Use a builder step to download various dependencies
-FROM node:${NODE_VERSION}-alpine AS builder
+FROM node:20.19.0 AS builder
 
 # Install fonts
 RUN	\
@@ -27,7 +27,7 @@ RUN corepack enable && corepack prepare --activate
 RUN	rm -rf /lib/apk/db /var/cache/apk/ /tmp/* /root/.npm /root/.cache/node /opt/yarn*
 
 # 2. Start with a new clean image and copy over the added files into a single layer
-FROM node:${NODE_VERSION}-alpine
+FROM node:20.19.0
 COPY --from=builder / /
 
 # Delete this folder to make the base image backward compatible to be able to build older version images
